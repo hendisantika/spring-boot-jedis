@@ -32,4 +32,9 @@ public class PincodeService implements PincodeRepository {
     private void initializeHashOperations() {
         hashOperations = redisTemplate.opsForHash();
     }
+
+    @Override
+    public void save(Pincode pincode) {
+        hashOperations.put(CACHE_NAME, pincode.id(), pincode);
+    }
 }
