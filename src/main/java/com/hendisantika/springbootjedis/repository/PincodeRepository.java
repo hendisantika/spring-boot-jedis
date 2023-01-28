@@ -15,4 +15,5 @@ import com.hendisantika.springbootjedis.model.Pincode;
 public interface PincodeRepository {
     void save(Pincode pincode);
 
+    Pincode find(Long id);
 }
