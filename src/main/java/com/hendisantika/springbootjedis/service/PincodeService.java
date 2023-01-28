@@ -2,6 +2,7 @@ package com.hendisantika.springbootjedis.service;
 
 import com.hendisantika.springbootjedis.model.Pincode;
 import com.hendisantika.springbootjedis.repository.PincodeRepository;
+import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -26,4 +27,9 @@ public class PincodeService implements PincodeRepository {
     private RedisTemplate<String, Object> redisTemplate;
 
     private HashOperations<String, Long, Pincode> hashOperations;
+
+    @PostConstruct
+    private void initializeHashOperations() {
+        hashOperations = redisTemplate.opsForHash();
+    }
 }
