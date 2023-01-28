@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-jedis
@@ -46,5 +48,11 @@ public class RedisController {
     public String deleteOldPincode(@PathVariable("id") long id) {
         pincodeService.delete(id);
         return "Successfully removed #pincode with id : " + id;
+    }
+
+    @Cacheable(key = "#id", value = "students", unless = "#result.id < 1200")
+    @GetMapping
+    public Map<Long, Pincode> fetchAllPincodes() {
+        return pincodeService.findAllPincodes();
     }
 }
