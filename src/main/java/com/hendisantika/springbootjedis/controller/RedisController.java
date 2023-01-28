@@ -1,7 +1,10 @@
 package com.hendisantika.springbootjedis.controller;
 
+import com.hendisantika.springbootjedis.model.Pincode;
 import com.hendisantika.springbootjedis.service.PincodeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,4 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class RedisController {
     private final PincodeService pincodeService;
 
+    @PostMapping
+    public String saveNewPincode(@RequestBody Pincode pincode) {
+        pincodeService.save(pincode);
+        return "Successfully added : " + pincode.pincodeVal() + " pincode";
+
+    }
 }
