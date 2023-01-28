@@ -37,4 +37,9 @@ public class PincodeService implements PincodeRepository {
     public void save(Pincode pincode) {
         hashOperations.put(CACHE_NAME, pincode.id(), pincode);
     }
+
+    @Override
+    public Pincode find(Long id) {
+        return hashOperations.get(CACHE_NAME, id);
+    }
 }
