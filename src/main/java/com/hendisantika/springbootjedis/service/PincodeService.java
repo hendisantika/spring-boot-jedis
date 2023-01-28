@@ -42,4 +42,9 @@ public class PincodeService implements PincodeRepository {
     public Pincode find(Long id) {
         return hashOperations.get(CACHE_NAME, id);
     }
+
+    @Override
+    public void delete(Long id) {
+        hashOperations.delete(CACHE_NAME, id);
+    }
 }
