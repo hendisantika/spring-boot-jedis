@@ -20,4 +20,6 @@ public interface PincodeRepository {
     Pincode find(Long id);
 
     Map<Long, Pincode> findAllPincodes();
+
+    void delete(Long id);
 }
