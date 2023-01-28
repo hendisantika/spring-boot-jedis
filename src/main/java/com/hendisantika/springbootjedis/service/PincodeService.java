@@ -8,6 +8,8 @@ import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-jedis
@@ -46,5 +48,10 @@ public class PincodeService implements PincodeRepository {
     @Override
     public void delete(Long id) {
         hashOperations.delete(CACHE_NAME, id);
+    }
+
+    @Override
+    public Map<Long, Pincode> findAllPincodes() {
+        return hashOperations.entries(CACHE_NAME);
     }
 }
