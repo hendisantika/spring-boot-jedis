@@ -55,4 +55,12 @@ public class RedisController {
     public Map<Long, Pincode> fetchAllPincodes() {
         return pincodeService.findAllPincodes();
     }
+
+//    @CachePut - Update a Cache. Use it with PutMapping
+	/*@CachePut(key="#id",cacheNames="pincode")
+	@PutMapping(path = "{id}")
+	public String updateOldPincode(@PathVariable("id") long id,@RequestBody Pincode pincode) {
+		pincodeService.update(id,pincode);
+		return "Successfully update #pincode with id : " + id;
+	}*/
 }
