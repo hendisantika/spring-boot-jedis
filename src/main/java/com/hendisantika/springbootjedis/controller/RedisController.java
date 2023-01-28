@@ -3,6 +3,9 @@ package com.hendisantika.springbootjedis.controller;
 import com.hendisantika.springbootjedis.model.Pincode;
 import com.hendisantika.springbootjedis.service.PincodeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +31,11 @@ public class RedisController {
     public String saveNewPincode(@RequestBody Pincode pincode) {
         pincodeService.save(pincode);
         return "Successfully added : " + pincode.pincodeVal() + " pincode";
+    }
 
+    @Cacheable(key = "#id", value = "picondes", unless = "#result.id < 1200")
+    @GetMapping(path = "/{id}")
+    public Pincode fetchStudent(@PathVariable("id") long id) {
+        return pincodeService.find(id);
     }
 }
