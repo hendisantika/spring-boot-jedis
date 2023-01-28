@@ -3,7 +3,9 @@ package com.hendisantika.springbootjedis.controller;
 import com.hendisantika.springbootjedis.model.Pincode;
 import com.hendisantika.springbootjedis.service.PincodeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -37,5 +39,12 @@ public class RedisController {
     @GetMapping(path = "/{id}")
     public Pincode fetchStudent(@PathVariable("id") long id) {
         return pincodeService.find(id);
+    }
+
+    @CacheEvict(key = "#id", value = "picondes")
+    @DeleteMapping(path = "/{id}")
+    public String deleteOldPincode(@PathVariable("id") long id) {
+        pincodeService.delete(id);
+        return "Successfully removed #pincode with id : " + id;
     }
 }
