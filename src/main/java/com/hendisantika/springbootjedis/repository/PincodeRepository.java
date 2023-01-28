@@ -2,6 +2,8 @@ package com.hendisantika.springbootjedis.repository;
 
 import com.hendisantika.springbootjedis.model.Pincode;
 
+import java.util.Map;
+
 /**
  * Created by IntelliJ IDEA.
  * Project : spring-boot-jedis
@@ -16,4 +18,6 @@ public interface PincodeRepository {
     void save(Pincode pincode);
 
     Pincode find(Long id);
+
+    Map<Long, Pincode> findAllPincodes();
 }
