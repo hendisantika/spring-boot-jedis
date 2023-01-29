@@ -29,3 +29,51 @@ and go through cache lifecycle. It varies in different scenario and requirement 
 stale data. So caching candidates will vary on each project, still those are few examples of caching – List of products
 available in an eCommerce store Any Master data which is not frequently changed Any frequently used database read query,
 where result does not change in each call at least for a specific period.
+
+### URL Specification for this code
+
+* Get a Pincode : http://localhost:8080/redis/pincode/{id of the pincode}
+* Get All Pincode : http://localhost:8080/redis/pincode
+* Add a Pincode : http://localhost:8080/redis/pincode
+  Request Body :
+
+```shell
+{ 
+  "id":2, 
+  "pincodeVal":"700125", 
+  "stateName":"WB" 
+}
+````
+
+* Delete a Pincode : http://localhost:8080/redis/pincode/{ id of the pincode, which want to delete }
+
+Redis Database For the Database, this example uses HashOperations. It is a redis construct, which can be used for reds
+hash operations. If you would like to see what are the different operations provided by spring data redis, please a look
+at the spring data redis documentation Redis Cache @EnableCaching - It enables Spring’s annotation-driven cache
+management
+capability. In spring boot project, we need to add it to the boot application class annotated with
+@SpringBootApplication.
+Spring provides one concurrent hashmap as default cache, but we can override CacheManager to register external cache
+providers as well easily.
+
+@Cacheable - It is used on the method level to let spring know that the response of the method are cacheable.
+Spring manages the request/response of this method to the cache specified in annotation attribute. For example,
+@Cacheable ("cache-name1", “cache-name2”).. Used with @GetMapping
+
+@CachePut - Update the Cache.Sometimes we need to manipulate the caching manually to put (update) cache before method
+call.
+This will allow us to update the cache and will also allow the method to be executed. The method will always be executed
+and
+its result placed into the cache (according to the @CachePut options). Used with @PutMapping
+
+@CacheEvict - It is used when we need to evict (remove) the cache previously loaded of master data. When CacheEvict
+annotated
+methods will be executed, it will clear the cache. We can specify key here to remove cache, if we need to remove all the
+entries of
+the cache then we need to use allEntries=true. This option comes in handy when an entire cache region needs to be
+cleared out –
+rather than evicting each entry (which would take a long time since it is inefficient), all the entries are removed in
+one operation.
+Delete the Cache. Used with @DeleteMapping
+
+@Caching This annotation is required when we need both CachePut and CacheEvict at the same time.
